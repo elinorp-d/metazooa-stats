@@ -84,10 +84,10 @@
         <canvas id="winChart"></canvas>
         <div style="text-align:center;margin-top:2px;font-weight:500;">Win %</div>
       </div>
-      <div class="chart-container">
+      <!-- <div class="chart-container">
         <canvas id="solveChart"></canvas>
         <div style="text-align:center;margin-top:2px;font-weight:500;">Solve Rate</div>
-      </div>
+      </div> -->
       <div class="chart-container">
         <canvas id="avgChart"></canvas>
         <div style="text-align:center;margin-top:2px;font-weight:500;">Avg # of Guesses</div>
@@ -102,9 +102,9 @@
       <span class="ya">Yasha</span> Win %: <span id="yashaWin"></span> &nbsp; 
       Ties: <span id="ties"></span>
       <br>
-      <span class="el">Elinor</span> Solve Rate: <span id="elinorSolve"></span> &nbsp; 
+      <!-- <span class="el">Elinor</span> Solve Rate: <span id="elinorSolve"></span> &nbsp; 
       <span class="ya">Yasha</span> Solve Rate: <span id="yashaSolve"></span>
-      <br>
+      <br> -->
       <span class="el">Elinor</span> Avg # Guesses: <span id="elinorAvg"></span> &nbsp; 
       <span class="ya">Yasha</span> Avg # Guesses: <span id="yashaAvg"></span>
     </div>
@@ -137,7 +137,7 @@
 
   <script>
     // Chart.js chart instances
-    let winChart, solveChart, avgChart, diffChart;
+    let winChart, /*solveChart,*/ avgChart, diffChart;
 
     // Utilities to parse Metazooa pasted results
     function parseResult(text) {
@@ -243,8 +243,8 @@
       document.getElementById('yashaWin').textContent = count ? yashaWinPct.toFixed(1) + '%' : '--';
       document.getElementById('ties').textContent = ties;
 
-      document.getElementById('elinorSolve').textContent = count ? elinorSolvePct.toFixed(1) + '%' : '--';
-      document.getElementById('yashaSolve').textContent = count ? yashaSolvePct.toFixed(1) + '%' : '--';
+      // document.getElementById('elinorSolve').textContent = count ? elinorSolvePct.toFixed(1) + '%' : '--';
+      // document.getElementById('yashaSolve').textContent = count ? yashaSolvePct.toFixed(1) + '%' : '--';
 
       document.getElementById('elinorAvg').textContent = count ? elinorAvg.toFixed(2) : '--';
       document.getElementById('yashaAvg').textContent = count ? yashaAvg.toFixed(2) : '--';
@@ -416,6 +416,7 @@
         winChart.update();
       }
       // Solve rate (Bar)
+      /*
       let barData = {
         labels: ['Elinor', 'Yasha'],
         datasets: [{
@@ -439,6 +440,7 @@
         solveChart.data = barData;
         solveChart.update();
       }
+      */
       // Avg # Guesses (Bar)
       let avgBar = {
         labels: ['Elinor', 'Yasha'],

@@ -92,6 +92,10 @@
         <canvas id="avgChart"></canvas>
         <div style="text-align:center;margin-top:2px;font-weight:500;">Avg # of Guesses</div>
       </div>
+      <div class="chart-container">
+        <canvas id="diffChart"></canvas>
+        <div style="text-align:center;margin-top:2px;font-weight:500;">Avg Win Differential</div>
+      </div>
     </div>
     <div style="text-align:center;margin-top:14px;">
       <span class="el">Elinor</span> Win %: <span id="elinorWin"></span> &nbsp; 
@@ -133,7 +137,7 @@
 
   <script>
     // Chart.js chart instances
-    let winChart, solveChart, avgChart;
+    let winChart, solveChart, avgChart, diffChart;
 
     // Utilities to parse Metazooa pasted results
     function parseResult(text) {
@@ -179,10 +183,7 @@
         else if (eRes.guesses > yRes.guesses) { winner = 'Yasha'; reason = 'Fewer guesses.'; }
         else { winner = 'Tie'; reason = 'Same number of guesses.'; }
       }
-      else { // both stumped
-        winner = 'Tie';
-        reason = 'Both stumped.';
-      }
+      else { winner = 'Tie'; reason = 'Both stumped.'; }
 
       // Prevent duplicates by puzzleNum
       if (puzzleNum && results.some(r => r.puzzleNum == puzzleNum)) {
@@ -207,10 +208,18 @@
       let elinorWins = 0, yashaWins = 0, ties = 0;
       let elinorSolves = 0, yashaSolves = 0;
       let elinorGuessTotal = 0, yashaGuessTotal = 0, count = 0;
+      let elinorWinDiffs = [], yashaWinDiffs = [];
 
       results.forEach(r => {
-        if (r.winner === 'Elinor') elinorWins++;
-        else if (r.winner === 'Yasha') yashaWins++;
+        if (r.winner === 'Elinor') {
+          elinorWins++;
+          // win diff = yasha.guesses - elinor.guesses (always positive)
+          elinorWinDiffs.push((r.yasha.guesses || 0) - (r.elinor.guesses || 0));
+        }
+        else if (r.winner === 'Yasha') {
+          yashaWins++;
+          yashaWinDiffs.push((r.elinor.guesses || 0) - (r.yasha.guesses || 0));
+        }
         else ties++;
         if (r.elinor.solved) elinorSolves++;
         if (r.yasha.solved) yashaSolves++;
@@ -226,6 +235,10 @@
       let elinorAvg = count ? (elinorGuessTotal/count) : 0;
       let yashaAvg = count ? (yashaGuessTotal/count) : 0;
 
+      // Average win differential for each player (positive, only over wins)
+      let elinorAvgDiff = elinorWinDiffs.length ? (elinorWinDiffs.reduce((a,b)=>a+b,0)/elinorWinDiffs.length) : 0;
+      let yashaAvgDiff = yashaWinDiffs.length ? (yashaWinDiffs.reduce((a,b)=>a+b,0)/yashaWinDiffs.length) : 0;
+
       document.getElementById('elinorWin').textContent = count ? elinorWinPct.toFixed(1) + '%' : '--';
       document.getElementById('yashaWin').textContent = count ? yashaWinPct.toFixed(1) + '%' : '--';
       document.getElementById('ties').textContent = ties;
@@ -236,7 +249,7 @@
       document.getElementById('elinorAvg').textContent = count ? elinorAvg.toFixed(2) : '--';
       document.getElementById('yashaAvg').textContent = count ? yashaAvg.toFixed(2) : '--';
 
-      // Table with Edit/Delete; now date is editable as a textbox
+      // Table with Edit/Delete; date is editable as a textbox
       let rows = results.map((r, trueIndex) => ({...r, trueIndex}))
         .reverse()
         .map((r, rowIdx) => {
@@ -278,10 +291,9 @@
         }).join('');
       document.querySelector('#historyTable tbody').innerHTML = rows || '<tr><td colspan="7">No results yet.</td></tr>';
 
-      updateCharts(elinorWinPct, yashaWinPct, ties, elinorSolvePct, yashaSolvePct, elinorAvg, yashaAvg);
+      updateCharts(elinorWinPct, yashaWinPct, ties, elinorSolvePct, yashaSolvePct, elinorAvg, yashaAvg, elinorAvgDiff, yashaAvgDiff);
     }
 
-    // Edit/Delete: Use actual array index (not reversed index)
     window.editEntry = function(trueIndex) {
       results[trueIndex]._editing = true;
       saveData(results);
@@ -293,7 +305,6 @@
     }
     window.saveEdit = function(trueIndex) {
       let r = results[trueIndex];
-      // New: get the date from the editable input!
       let dateText = document.getElementById('editDate'+trueIndex).value.trim();
       let elinorText = document.getElementById('editElinor'+trueIndex).value.trim();
       let yashaText = document.getElementById('editYasha'+trueIndex).value.trim();
@@ -384,9 +395,7 @@
       reader.readAsText(file);
     });
 
-    // Chart.js graphs for dashboard
-    function updateCharts(elinorWinPct, yashaWinPct, ties, elinorSolve, yashaSolve, elinorAvg, yashaAvg) {
-      // Colors: Elinor = green, Yasha = purple, Tie = gray
+    function updateCharts(elinorWinPct, yashaWinPct, ties, elinorSolve, yashaSolve, elinorAvg, yashaAvg, elinorAvgDiff, yashaAvgDiff) {
       let elColor = '#13b34a', yaColor = '#8a37d7', tieColor = '#d4d4d4';
       // Win chart (Pie)
       let pieData = {
@@ -453,6 +462,30 @@
       } else {
         avgChart.data = avgBar;
         avgChart.update();
+      }
+      // Win Differential
+      let diffBar = {
+        labels: ['Elinor', 'Yasha'],
+        datasets: [{
+          label: 'Avg Win Differential',
+          data: [elinorAvgDiff, yashaAvgDiff],
+          backgroundColor: [elColor, yaColor],
+          borderRadius: 6,
+        }]
+      };
+      if (!diffChart) {
+        diffChart = new Chart(document.getElementById('diffChart').getContext('2d'), {
+          type: 'bar',
+          data: diffBar,
+          options: { 
+            responsive:true,
+            scales: { y: { min:0, max:20, ticks:{stepSize:2}}},
+            plugins:{legend:{display:false}}
+          }
+        });
+      } else {
+        diffChart.data = diffBar;
+        diffChart.update();
       }
     }
   </script>

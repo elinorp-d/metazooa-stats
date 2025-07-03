@@ -14,13 +14,13 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
 - **Winner auto-calculated:**  
   - If only one solves, that player wins  
   - If both solve, lower number of guesses wins  
-  - If tied, it’s a tie  
-  - If both stumped, it’s a tie  
+  - If tied, it's a tie  
+  - If both stumped, it's a tie  
 - **Graphical stats dashboard:**  
   - Win % (pie chart)  
-  - Solve Rate (bar chart)  
   - Average number of guesses (bar chart)
-- **Full results history** table, including winner and reason for each day.
+  - Average win differential (bar chart) - how much each player wins by on average
+- **Full results history** table, including winner and reason for each day, sorted by puzzle number (newest first).
 - **Edit and delete** any previous entry directly in the browser.
 - **Export/Import CSV** to back up or restore all data, or to use with Google Sheets/Excel.
 - **All data is private and stays in your browser** (using localStorage).
@@ -31,11 +31,11 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
 ## How To Use
 
 1. **Open `metazooa-head2head.html` in your web browser** (double-click, or right-click and open with Chrome/Firefox/Edge/Safari).
-2. **Paste your Metazooa result** in the Elinor or Yasha box, and click **“Add Today’s Result.”**
+2. **Paste your Metazooa result** in the Elinor or Yasha box, and click **"Add Today's Result."**
 3. **See stats and history** update automatically.
 4. To **edit or delete** a past entry, use the links in the Results History table.
 5. To **back up or share data**, use **Export CSV** to save your history, and **Import CSV** to restore it (or load it on another device/browser).
-6. **Data persists automatically** as long as you use the same browser and don’t clear site data.
+6. **Data persists automatically** as long as you use the same browser and don't clear site data.
 
 > **Tip:** For extra peace of mind, occasionally export your CSV and keep it in the same folder.
 
@@ -45,7 +45,7 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
 
 - Works best for two players (Elinor and Yasha).
 - The app cannot automatically import your CSV without you selecting it (browser security).
-- If you clear browser data, you’ll lose your history unless you have exported it as CSV.
+- If you clear browser data, you'll lose your history unless you have exported it as CSV.
 - The HTML and CSV files can be kept together in a git repo for easy versioning and backup.
 
 ---

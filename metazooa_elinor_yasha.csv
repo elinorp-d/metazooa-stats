@@ -1,2 +1,15 @@
 date,puzzleNum,elinorSolved,elinorGuesses,yashaSolved,yashaGuesses,winner,reason
 2025-07-03,703,true,8,true,8,Tie,Same number of guesses.
+2025-02-17,568,true,16,true,6,Yasha,Fewer guesses.
+2025-02-22,573,true,17,true,12,Yasha,Fewer guesses.
+2025-05-02,581,true,5,true,11,Elinor,Fewer guesses.
+2025-05-03,582,true,8,true,5,Yasha,Fewer guesses.
+2025-05-05,583,true,10,true,8,Yasha,Fewer guesses.
+2025-05-06,584,true,14,true,8,Yasha,Fewer guesses.
+2025-05-07,585,true,6,true,13,Elinor,Fewer guesses.
+2025-05-09,587,true,4,true,4,Tie,Same number of guesses.
+2025-05-10,588,true,6,true,17,Elinor,Fewer guesses.
+2025-03-14,592,true,9,true,11,Elinor,Fewer guesses.
+2025-03-17,595,true,10,true,2,Yasha,Fewer guesses.
+2025-03-24,602,true,8,true,7,Yasha,Fewer guesses.
+2025-03-26,604,true,19,true,13,Yasha,Fewer guesses.

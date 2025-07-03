@@ -236,15 +236,14 @@
       document.getElementById('elinorAvg').textContent = count ? elinorAvg.toFixed(2) : '--';
       document.getElementById('yashaAvg').textContent = count ? yashaAvg.toFixed(2) : '--';
 
-      // Table with Edit/Delete; attach true index as data attribute
+      // Table with Edit/Delete; now date is editable as a textbox
       let rows = results.map((r, trueIndex) => ({...r, trueIndex}))
         .reverse()
         .map((r, rowIdx) => {
           if (r._editing) {
-            // Show inline editing form
             return `
             <tr>
-              <td>${r.date}</td>
+              <td><input id="editDate${r.trueIndex}" type="text" value="${r.date}" style="width:110px;" /></td>
               <td>${r.puzzleNum||''}</td>
               <td><textarea id="editElinor${r.trueIndex}" class="editArea">${r.elinor.raw||''}</textarea></td>
               <td><textarea id="editYasha${r.trueIndex}" class="editArea">${r.yasha.raw||''}</textarea></td>
@@ -279,7 +278,6 @@
         }).join('');
       document.querySelector('#historyTable tbody').innerHTML = rows || '<tr><td colspan="7">No results yet.</td></tr>';
 
-      // Chart.js updates
       updateCharts(elinorWinPct, yashaWinPct, ties, elinorSolvePct, yashaSolvePct, elinorAvg, yashaAvg);
     }
 
@@ -295,12 +293,13 @@
     }
     window.saveEdit = function(trueIndex) {
       let r = results[trueIndex];
+      // New: get the date from the editable input!
+      let dateText = document.getElementById('editDate'+trueIndex).value.trim();
       let elinorText = document.getElementById('editElinor'+trueIndex).value.trim();
       let yashaText = document.getElementById('editYasha'+trueIndex).value.trim();
       let eRes = parseResult(elinorText);
       let yRes = parseResult(yashaText);
       if (!eRes || !yRes) { alert('Please paste valid Metazooa results for both players.'); return; }
-      // Recalculate winner/reason
       let winner = 'Tie', reason = '';
       if (eRes.solved && !yRes.solved) { winner = 'Elinor'; reason = 'Solved, opponent didn\'t.'; }
       else if (!eRes.solved && yRes.solved) { winner = 'Yasha'; reason = 'Solved, opponent didn\'t.'; }
@@ -309,10 +308,8 @@
         else if (eRes.guesses > yRes.guesses) { winner = 'Yasha'; reason = 'Fewer guesses.'; }
         else { winner = 'Tie'; reason = 'Same number of guesses.'; }
       }
-      else { // both stumped
-        winner = 'Tie';
-        reason = 'Both stumped.';
-      }
+      else { winner = 'Tie'; reason = 'Both stumped.'; }
+      r.date = dateText;
       r.elinor = eRes; r.yasha = yRes;
       r.elinor.raw = elinorText; r.yasha.raw = yashaText;
       r.puzzleNum = eRes.puzzleNum || yRes.puzzleNum || r.puzzleNum;

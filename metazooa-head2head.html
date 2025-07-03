@@ -251,7 +251,12 @@
 
       // Table with Edit/Delete; date is editable as a textbox
       let rows = results.map((r, trueIndex) => ({...r, trueIndex}))
-        .reverse()
+        .sort((a, b) => {
+          // Sort by puzzle number (descending)
+          const puzzleA = Number(a.puzzleNum) || 0;
+          const puzzleB = Number(b.puzzleNum) || 0;
+          return puzzleB - puzzleA;
+        })
         .map((r, rowIdx) => {
           if (r._editing) {
             return `

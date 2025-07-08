@@ -117,11 +117,6 @@
       <span class="ya">Yasha</span> Win %: <span id="yashaWin"></span> &nbsp; 
       Ties: <span id="ties"></span>
       <br>
-      <!-- <span class="el">Elinor</span> Solve Rate: <span id="elinorSolve"></span> &nbsp; 
-      <span class="ya">Yasha</span> Solve Rate: <span id="yashaSolve"></span>
-      <br> -->
-      <span class="el">Elinor</span> Avg # Guesses: <span id="elinorAvg"></span> &nbsp; 
-      <span class="ya">Yasha</span> Avg # Guesses: <span id="yashaAvg"></span>
     </div>
   </div>
 
@@ -273,10 +268,7 @@
       document.getElementById('elinorWin').textContent = count ? elinorWinPct.toFixed(1) + '%' : '--';
       document.getElementById('yashaWin').textContent = count ? yashaWinPct.toFixed(1) + '%' : '--';
       document.getElementById('ties').textContent = ties;
-    
-      document.getElementById('elinorAvg').textContent = count ? elinorAvg.toFixed(2) : '--';
-      document.getElementById('yashaAvg').textContent = count ? yashaAvg.toFixed(2) : '--';
-     
+         
       // Log standard deviation values to the console
       console.log('Elinor Guess Standard Deviation:', elinorGuessStdDev);
       console.log('Yasha Guess Standard Deviation:', yashaGuessStdDev);
@@ -519,13 +511,21 @@
               legend: {display: false},
               datalabels: {
                 color: '#fff',
-                anchor: 'center',
-                align: 'center',
                 formatter: function(value) {
                   return value.toFixed(2);
                 },
                 font: {
                   weight: 'bold'
+                },
+                // Use these settings for positioning
+                position: 'chartArea', // Position relative to chart area
+                anchor: 'start', // Center horizontally
+                align: 'bottom', // Align to bottom
+                clamp: true, // Prevent labels from going outside chart
+                offset: function(context) {
+                  // Get chart height and calculate offset to position above x-axis
+                  const chartHeight = context.chart.height;
+                  return -chartHeight * 0.065; // offset by % of chart height from bottom
                 }
               },
               tooltip: {
@@ -626,13 +626,21 @@
               legend: {display: false},
               datalabels: {
                 color: '#fff',
-                anchor: 'center',
-                align: 'center',
                 formatter: function(value) {
                   return value.toFixed(2);
                 },
                 font: {
                   weight: 'bold'
+                },
+                // Use these settings for positioning
+                position: 'chartArea', // Position relative to chart area
+                anchor: 'start', // Center horizontally
+                align: 'bottom', // Align to bottom
+                clamp: true, // Prevent labels from going outside chart
+                offset: function(context) {
+                  // Get chart height and calculate offset to position above x-axis
+                  const chartHeight = context.chart.height;
+                  return -chartHeight * 0.065; // offset by % of chart height from bottom
                 }
               },
               tooltip: {

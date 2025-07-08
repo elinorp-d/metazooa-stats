@@ -1,6 +1,6 @@
 # Metazooa Head-to-Head: Elinor vs Yasha
 
-A simple, zero-setup web app for tracking your daily Metazooa results and friendly rivalry stats between Elinor and Yasha.
+A simple, modular web app for tracking your daily Metazooa results and friendly rivalry stats between Elinor and Yasha.
 
 ---
 
@@ -18,13 +18,32 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
   - If both stumped, it's a tie  
 - **Graphical stats dashboard:**  
   - Win % (pie chart)  
-  - Average number of guesses (bar chart)
+  - Average number of guesses (bar chart) with standard deviation
   - Average win differential (bar chart) - how much each player wins by on average
 - **Full results history** table, including winner and reason for each day, sorted by puzzle number (newest first).
 - **Edit and delete** any previous entry directly in the browser.
 - **Export/Import CSV** to back up or restore all data, or to use with Google Sheets/Excel.
 - **All data is private and stays in your browser** (using localStorage).
 - **No server or sign-in required.**
+
+---
+
+## Project Structure
+
+```
+metazooa-stats/
+├── metazooa-head2head.html # Main HTML file (entry point that loads all resources)
+├── css/ # CSS styles folder
+│ └── styles.css # All CSS styles
+├── js/ # JavaScript modules
+│ ├── config.js # Configuration constants (colors, chart settings)
+│ ├── data-utils.js # Data handling utilities (functions for data processing, stats calculation, and storage)
+│ ├── chart-utils.js # Chart creation and rendering
+│ ├── ui-handlers.js # User interface event handlers
+│ └── main.js # Core application logic and initialization
+├── metazooa_elinor_yasha.csv # Sample/exported data
+└── ui_screenshot.png # Screenshot for documentation
+```
 
 ---
 
@@ -46,15 +65,7 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
 - Works best for two players (Elinor and Yasha).
 - The app cannot automatically import your CSV without you selecting it (browser security).
 - If you clear browser data, you'll lose your history unless you have exported it as CSV.
-- The HTML and CSV files can be kept together in a git repo for easy versioning and backup.
-
----
-
-### Example Files in Repo
-
-- `metazooa-head2head.html` — The app (open in browser)
-- `metazooa_elinor_yasha.csv` — Your backup/exported results (can import into the app)
-- `ui_screenshot.png` — Screenshot of the app UI
+- Keep all files in the same directory structure to ensure proper functioning.
 
 ---
 
@@ -64,6 +75,7 @@ A simple, zero-setup web app for tracking your daily Metazooa results and friend
 - Auto-backup reminders or download
 - Support for more than two players
 - Online hosting
+- Progressive Web App capabilities
 
 ---
 

@@ -477,6 +477,8 @@
           data: avgBar,
           options: { 
             responsive:true,
+            maintainAspectRatio: true,
+            aspectRatio: 0.75, // width/height = 0.5 means height = 2x width
             scales: { y: { min:0, max:20, ticks:{stepSize:5}}},
             plugins:{legend:{display:false}}
           }
@@ -501,6 +503,8 @@
           data: diffBar,
           options: { 
             responsive:true,
+            maintainAspectRatio: true,
+            aspectRatio: 0.75, // width/height = 0.5 means height = 2x width
             scales: { y: { min:0, max:20, ticks:{stepSize:2}}},
             plugins:{legend:{display:false}}
           }

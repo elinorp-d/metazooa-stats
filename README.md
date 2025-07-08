@@ -32,17 +32,17 @@ A simple, modular web app for tracking your daily Metazooa results and friendly 
 
 ```
 metazooa-stats/
-├── metazooa-head2head.html # Main HTML file (entry point that loads all resources)
-├── css/ # CSS styles folder
-│ └── styles.css # All CSS styles
-├── js/ # JavaScript modules
-│ ├── config.js # Configuration constants (colors, chart settings)
-│ ├── data-utils.js # Data handling utilities (functions for data processing, stats calculation, and storage)
-│ ├── chart-utils.js # Chart creation and rendering
-│ ├── ui-handlers.js # User interface event handlers
-│ └── main.js # Core application logic and initialization
-├── metazooa_elinor_yasha.csv # Sample/exported data
-└── ui_screenshot.png # Screenshot for documentation
+├── metazooa-head2head.html     # Main HTML file (entry point that loads all resources)
+├── css/                        # CSS styles folder
+│ └── styles.css                # All CSS styles
+├── js/                         # JavaScript modules
+│ ├── config.js                 # Configuration constants (colors, chart settings)
+│ ├── data-utils.js             # Data handling utilities (processing, stats calculation, and storage)
+│ ├── chart-utils.js            # Chart creation and rendering
+│ ├── ui-handlers.js            # User interface event handlers
+│ └── main.js                   # Core application logic and initialization
+├── metazooa_elinor_yasha.csv   # Sample/exported data
+└── ui_screenshot.png           # Screenshot for documentation
 ```
 
 ---

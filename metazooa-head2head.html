@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Metazooa Head-to-Head: Elinor vs Yasha</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>  <style>
     body { font-family: system-ui,sans-serif; max-width: 900px; margin: 30px auto; }
     h1, h2 { text-align: center; }
     .flex-row {
@@ -476,12 +476,26 @@
           type: 'bar',
           data: avgBar,
           options: { 
-            responsive:true,
+            responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 0.75, // width/height = 0.5 means height = 2x width
+            aspectRatio: 0.75,
             scales: { y: { min:0, max:20, ticks:{stepSize:5}}},
-            plugins:{legend:{display:false}}
-          }
+            plugins: {
+              legend: {display: false},
+              datalabels: {
+                color: '#fff',
+                anchor: 'center',
+                align: 'center',
+                formatter: function(value) {
+                  return value.toFixed(2);
+                },
+                font: {
+                  weight: 'bold'
+                }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
         });
       } else {
         avgChart.data = avgBar;
@@ -502,12 +516,26 @@
           type: 'bar',
           data: diffBar,
           options: { 
-            responsive:true,
+            responsive: true,
             maintainAspectRatio: true,
-            aspectRatio: 0.75, // width/height = 0.5 means height = 2x width
+            aspectRatio: 0.75,
             scales: { y: { min:0, max:20, ticks:{stepSize:2}}},
-            plugins:{legend:{display:false}}
-          }
+            plugins: {
+              legend: {display: false},
+              datalabels: {
+                color: '#fff',
+                anchor: 'center',
+                align: 'center',
+                formatter: function(value) {
+                  return value.toFixed(2);
+                },
+                font: {
+                  weight: 'bold'
+                }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
         });
       } else {
         diffChart.data = diffBar;
